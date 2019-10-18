@@ -5,9 +5,11 @@ class Country(models.Model):
     name = models.CharField(max_length=50)
     code = models.CharField(max_length=3)
 
+
 class Indicator(models.Model):
     name = models.CharField(max_length=70)
     code = models.CharField(max_length=20)
+
 
 class Value(models.Model):
     value = models.CharField(max_length=255)
