@@ -42,7 +42,7 @@ class Command(BaseCommand):
                                         'year': years[index_year]
                                     }
 
-                                    Indicator(**indicator).save()
+                                    Indicator.objects.create(**indicator)
 
                         self.stdout.write(self.style.SUCCESS(f'{filename} data saved into database successfully!'))
 

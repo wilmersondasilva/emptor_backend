@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Indicator(models.Model):
     indicator_name = models.CharField(max_length=70)
     indicator_code = models.CharField(max_length=20)
