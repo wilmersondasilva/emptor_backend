@@ -1,10 +1,12 @@
 import csv
 import os
+import glob
 
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
+from django.db import transaction
 
-from api.models import Country,  Indicator, Value
+from api.models import Indicator
 
 DATA_SOURCES_DIR = os.path.join(settings.BASE_DIR, 'api/data_sources')
 
@@ -13,13 +15,41 @@ class Command(BaseCommand):
     help = 'Populate the API database'
 
     def handle(self, *args, **options):
-        countries = []
-        indicators = []
+        self.stdout.write('Starting... ')
 
-        with open(f"{DATA_SOURCES_DIR}/population_total.csv", mode='r') as csv_file:
-            csv_reader = csv.reader(csv_file)
-            line_count = 0
-            for row in csv_reader:
-                if line_count == 0:
-                    self.stdout.write(f'Column names are {", ".join(row)}')
-                    line_count += 1
+        try:
+            with transaction.atomic():
+                for filename in glob.glob(f'{DATA_SOURCES_DIR}/*.csv'):
+                    with open(filename, mode='r') as csv_file:
+                        csv_reader = csv.reader(csv_file)
+                        years = []
+
+                        self.stdout.write(f'Start getting data from {filename}')
+                        for index_row, row in enumerate(csv_reader):
+                            year_columns = range(4, len(row) - 1)
+
+                            if index_row == 0:
+                                for column in year_columns:
+                                    years.append(row[column])
+                            else:
+                                for index_year, column in enumerate(year_columns):
+                                    indicator = {
+                                        'country_name': row[0],
+                                        'country_code': row[1],
+                                        'indicator_name': row[2],
+                                        'indicator_code': row[3],
+                                        'value': row[column],
+                                        'year': years[index_year]
+                                    }
+
+                                    Indicator(**indicator).save()
+
+                        self.stdout.write(self.style.SUCCESS(f'{filename} data saved into database successfully!'))
+
+            self.stdout.write('Finished!')
+        except:
+            if options['traceback']:
+                raise
+            else:
+                raise CommandError("Something wrong has happened and the database wasn't populated. "
+                                   "Try run using the argument --traceback for more info.")
