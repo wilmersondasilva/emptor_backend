@@ -23,8 +23,8 @@ class TestGet(APITestCase):
 
         self.assertListEqual(response.data, [{
             'id': indicator.id,
-            'indicator_name': indicator.indicator_name,
-            'indicator_code': indicator.indicator_code,
+            'name': indicator.indicator_name,
+            'code': indicator.indicator_code,
             'country_name': indicator.country_name,
             'country_code': indicator.country_code,
             'value': indicator.value,

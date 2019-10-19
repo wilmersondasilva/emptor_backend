@@ -36,8 +36,8 @@ class Command(BaseCommand):
                                     indicator = {
                                         'country_name': row[0],
                                         'country_code': row[1],
-                                        'indicator_name': row[2],
-                                        'indicator_code': row[3],
+                                        'name': row[2],
+                                        'code': row[3],
                                         'value': row[column],
                                         'year': years[index_year]
                                     }
