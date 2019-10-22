@@ -8,3 +8,6 @@ class Indicator(models.Model):
     country_code = models.CharField(max_length=3)
     value = models.CharField(max_length=255, default='')
     year = models.CharField(max_length=4)
+
+    class Meta:
+        ordering = ['id']
