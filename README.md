@@ -2,13 +2,13 @@
 
 ## About my decisions
 
-I've chosen Django since it's been 3 years that I don't work with Python and it's the Python framework that I'm more comfortable with.
+I've chosen Django since I haven't worked with Python for 3 years and it's the Python framework that I'm the most comfortable with.
 
-About the database, I decided to design it as a reporting database. When it comes to data normalization, would be better to design it as an operational database, but for all reading operations, it'd be necessary some join operations. Furthermore, it wouldn't be other reasons for using an operational database besides have a well-normalized database. So in this case, I've chosen performance over normalization. This article helped me to make this decision: https://martinfowler.com/bliki/ReportingDatabase.html
+About the database, I decided to design it as a reporting database. When it comes to data normalization, it would be better to design it as an operational database, but for all read operations, some join operations would be necessary. Furthermore, there wouldn't be other reasons for using an operational database besides having a well-normalized database. So in this case, I've chosen performance over normalization. This article helped me to make this decision: https://martinfowler.com/bliki/ReportingDatabase.html
 
 I've saved the data of the WorldBank site as CSV files and created a Django custom management command for populating the database with this data.
 
-Unfortunately, I haven't enough available time to do everything I was planning. I left some things for the last moments, like create environment variables, create more tests and integrate Sentry into the project. But, I ran out of time.
+Unfortunately, I didn't have enough spare time to do everything I was planning. I left some things for the last minute, like creating environment variables, creating more tests and integrating Sentry into the project, but I ran out of time.
 
 ## Inital project setup
 
